@@ -6,7 +6,7 @@ import { CircleCheck } from "lucide-react";
 const About = () => {
   return (
     <Container>
-      <div className="p-0 md:p-8 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
+      <div className="p-0 md:p-8 py-16 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 ">
         <div className=" flex flex-col mx-4">
           <h1 className="block antialiased tracking-normal font-sans font-semibold leading-tight mb-4 text-3xl">
             About Us
