@@ -1,5 +1,5 @@
 import Container from "@/layouts/Container";
-import faqimg from "../assets/slider13.jpg";
+import faqimg from "../assets/slider13.png";
 import {
   Accordion,
   AccordionContent,

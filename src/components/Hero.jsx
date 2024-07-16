@@ -2,7 +2,7 @@ import heroimg from "../assets/slider1.jpg";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       <img
         className="absolute inset-0 w-full h-full object-cover"
         src={heroimg}
