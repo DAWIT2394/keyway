@@ -1,7 +1,18 @@
+import About from "@/components/About";
+import Counter from "@/components/Counter";
+import Faq from "@/components/Faq";
 import React from "react";
 
 const Aboutus = () => {
-  return <div>Aboutus</div>;
+  return (
+    <>
+      <About />
+
+      <Faq />
+
+      <Counter />
+    </>
+  );
 };
 
 export default Aboutus;
