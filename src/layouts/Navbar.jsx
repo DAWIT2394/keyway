@@ -1,16 +1,35 @@
 import Theme from "@/components/Theme";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [state, setState] = useState(false);
   const location = useLocation();
+  const navRef = useRef();
 
   const toggleMenu = () => {
     setState(!state);
   };
+
+  const handleClickOutside = (event) => {
+    if (navRef.current && !navRef.current.contains(event.target)) {
+      setState(false);
+    }
+  };
+
+  useEffect(() => {
+    if (state) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [state]);
 
   const menus = [
     { title: "Home", path: "/" },
@@ -19,7 +38,10 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-[#F0F8FF] dark:bg-black w-full sticky top-0 z-50">
+    <nav
+      ref={navRef}
+      className="bg-[#F0F8FF] dark:bg-black w-full sticky top-0 z-50"
+    >
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <a
