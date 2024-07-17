@@ -3,8 +3,8 @@ import { useInView } from "react-intersection-observer";
 
 const Counter = () => {
   const [ref, inView] = useInView({
-    triggerOnce: false, // Only trigger once
-    threshold: 0.1, // When 10% of the element is visible
+    triggerOnce: false,
+    threshold: 0.1,
   });
 
   return (

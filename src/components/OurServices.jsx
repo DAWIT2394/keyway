@@ -12,18 +12,41 @@ import { FileText } from "lucide-react";
 import { Percent } from "lucide-react";
 import { Headset } from "lucide-react";
 import { CircleDollarSign } from "lucide-react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const OurServices = () => {
+  const appear = {
+    hidden: { opacity: -1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
   return (
     <Container className=" py-16 md:py-32">
-      <div className=" flex justify-center">
+      <div className=" flex justify-center" ref={ref}>
         <h1 className="block antialiased tracking-normal font-sans font-semibold leading-tight mb-4 text-3xl">
           Our Services
         </h1>
       </div>
 
-      <div className="p-0 md:p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 ">
-        <Card className="hover:bg-gray-100 dark:hover:bg-zinc-800 dark:hover:bg-zinc-800 cursor-pointer">
+      <motion.div
+        variants={appear}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        className="p-0 md:p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 "
+      >
+        <Card className="hover:bg-gray-100 dark:hover:bg-zinc-800 cursor-pointer">
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <CircleDollarSign />
             <CardTitle>Dispatching</CardTitle>
@@ -72,7 +95,7 @@ const OurServices = () => {
             <CardDescription>From 5% of gross</CardDescription>
           </CardHeader>
         </Card>
-      </div>
+      </motion.div>
     </Container>
   );
 };

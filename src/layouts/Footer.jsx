@@ -60,12 +60,12 @@ const Footer = () => {
                 Home
               </Link>
 
-              <Link to="/services" className="text-primary hover:underline">
+              <Link to="/aboutus" className="text-primary hover:underline">
                 {" "}
                 About
               </Link>
 
-              <Link to="/services" className="text-primary hover:underline">
+              <Link to="/contact" className="text-primary hover:underline">
                 {" "}
                 Contact Us
               </Link>

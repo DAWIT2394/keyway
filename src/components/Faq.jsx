@@ -6,16 +6,62 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 const Faq = () => {
+  const textContainerVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const imageContainerVariants = {
+    hidden: { opacity: 0, x: 100 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
   return (
     <Container>
-      <div className="p-0 md:p-8 py-16 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 ">
+      <div
+        ref={ref}
+        className="p-0 md:p-8 py-16 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 "
+      >
         <div className=" md:pr-24">
-          <img src={faqimg} alt="" className="rounded-2xl " />
+          <motion.img
+            src={faqimg}
+            alt=""
+            className="rounded-2xl "
+            variants={imageContainerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+          />
         </div>
 
-        <div className=" flex flex-col mx-4  h-full">
+        <motion.div
+          variants={textContainerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className=" flex flex-col mx-4  h-full"
+        >
           <h1 className="block antialiased tracking-normal font-sans font-semibold leading-tight mb-4 text-3xl">
             Frequently Asked Questions
           </h1>
@@ -63,7 +109,7 @@ const Faq = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-        </div>
+        </motion.div>
       </div>
     </Container>
   );

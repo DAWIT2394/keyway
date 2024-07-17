@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils"; // Utility to combine classes
+import { cn } from "@/lib/utils";
 
 const Container = ({ className, children, ...props }) => {
   return (

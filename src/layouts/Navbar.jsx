@@ -2,7 +2,7 @@ import Theme from "@/components/Theme";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation hook from react-router-dom
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [state, setState] = useState(false);
