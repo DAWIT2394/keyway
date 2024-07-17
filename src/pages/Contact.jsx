@@ -7,17 +7,9 @@ import Container from "@/layouts/Container";
 const Contactus = () => {
   return (
     <Container className="relative bg-blue-gray-50 py-12">
-      <div className=" mx-auto px-4 lg:px-0 ">
-        <div className=" flex flex-col justify-center items-center gap-8">
-          <h1 className="block antialiased tracking-normal font-sans font-semibold leading-tight mb-4 text-3xl">
-            Get In Touch
-          </h1>
-        </div>
+      <ContactForm />
 
-        <ContactForm />
-
-        <States />
-      </div>
+      <States />
     </Container>
   );
 };
