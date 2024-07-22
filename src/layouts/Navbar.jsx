@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Logo from "../assets/logo.png";
 
 export default function Navbar() {
   const [state, setState] = useState(false);
@@ -48,7 +49,7 @@ export default function Navbar() {
             href="/"
             className="flex justify-center items-center gap-2 text-3xl"
           >
-            <img src="src\assets\logo.png" alt="Logo" />
+            <img src={Logo} alt="Logo" />
           </a>
           <div className="md:hidden my-4">
             <button
