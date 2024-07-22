@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Container from "@/layouts/Container";
-import aboutimg from "../assets/slider8.jpg";
+import aboutimg from "../assets/about1.png";
 import { CircleCheck } from "lucide-react";
 
 const About = () => {
@@ -18,7 +18,7 @@ const About = () => {
   };
 
   const imageContainerVariants = {
-    hidden: { opacity: 0, x: 100 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       x: 0,
@@ -59,7 +59,7 @@ const About = () => {
             that handles all of the back-office work so you can compete with the
             large fleets. Typically, a large carrier would hire somebody to
             handle all of these tasks, but it is unaffordable for a small
-            carrier, that’s where Exact dispatcher LLC comes in to help!
+            carrier, that’s where Keyway-dispatcher LLC comes in to help!
           </p>
           <div className="mt-4 flex flex-col gap-1">
             <p className="flex gap-2 items-center">
@@ -84,8 +84,11 @@ const About = () => {
             </p>
           </div>
         </motion.div>
-        <motion.div variants={imageContainerVariants}>
-          <img src={aboutimg} alt="" className="rounded-2xl" />
+        <motion.div
+          variants={imageContainerVariants}
+          className="flex justify-center items-center"
+        >
+          <img src={aboutimg} alt="" className="rounded-2xl shadow-md " />
         </motion.div>
       </motion.div>
     </Container>

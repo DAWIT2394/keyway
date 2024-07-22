@@ -16,15 +16,20 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-8 uppercase">Contact Us</h3>
 
             <div className=" flex flex-col gap-4 text-gray-500">
-              <p>
-                561, 1007 N Orange St. 4th Floor, Wilmington, DE, New Castle,
-                US, 19801
-              </p>
+              <p>2443 Palmetto St, Oakland, California 94602, United States</p>
 
-              <div>
-                <p className="text-primary"> +1 (302) 204-8440</p>
+              <div
+                className=" flex flex-col gap-2
+              "
+              >
+                <a href="tel:+15106005530" className="text-primary">
+                  {" "}
+                  +1 (510) 600-5530
+                </a>
 
-                <p className="text-primary">info@exact-dispatcher.com</p>
+                <a href="mailto:info@keyway.com" className="text-primary">
+                  info@keyway.com
+                </a>
               </div>
             </div>
           </div>

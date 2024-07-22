@@ -1,6 +1,6 @@
 import Container from "@/layouts/Container";
-import serimg from "../assets/slider5.png";
-import ser2img from "../assets/slider6.png";
+import serimg from "../assets/about2.png";
+import ser2img from "../assets/about3.png";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 
@@ -29,7 +29,7 @@ const About2 = () => {
   };
 
   const imageContainerVariants = {
-    hidden: { opacity: 0, x: 100 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       x: 0,
@@ -47,8 +47,8 @@ const About2 = () => {
 
   return (
     <Container>
-      <div ref={ref}>
-        <div className=" flex justify-center my-8">
+      <div ref={ref} className=" ">
+        <div className=" flex justify-center my-8 ">
           <motion.img
             variants={appear}
             initial="hidden"
@@ -58,12 +58,12 @@ const About2 = () => {
           />
         </div>
 
-        <div className="p-0 md:p-8 py-16 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 ">
+        <div className="p-0 md:p-8 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 ">
           <div className=" mr-8">
             <motion.img
               src={ser2img}
               alt=""
-              className="rounded-2xl"
+              className="rounded-2xl shadow-md"
               variants={imageContainerVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
@@ -81,7 +81,7 @@ const About2 = () => {
             </h1>
 
             <p>
-              Exact dispatcher - dispatch services arranges professional
+              Keyway dispatcher - dispatch services arranges professional
               dispatch services for owner operators and truckers who are tired
               of wasting their time and energy on cheap freight. Trucks Dispatch
               Services provides the prospect of high paying loads while you

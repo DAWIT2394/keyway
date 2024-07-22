@@ -1,5 +1,5 @@
 import Container from "@/layouts/Container";
-import faqimg from "../assets/slider13.png";
+import faqimg from "../assets/faq.png";
 import {
   Accordion,
   AccordionContent,
@@ -23,7 +23,7 @@ const Faq = () => {
   };
 
   const imageContainerVariants = {
-    hidden: { opacity: 0, x: 100 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       x: 0,

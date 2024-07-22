@@ -48,7 +48,7 @@ export default function Navbar() {
             href="/"
             className="flex justify-center items-center gap-2 text-3xl"
           >
-            <img src="vite.svg" alt="Logo" />
+            <img src="src\assets\logo.png" alt="Logo" />
           </a>
           <div className="md:hidden my-4">
             <button
