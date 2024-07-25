@@ -20,7 +20,9 @@ const Topbar = () => {
             <div className="flex justify-center items-center mr-2">
               <Mail size={16} className="text-primary" />
             </div>
-            <a href="mailto:info@keyway.com">info@keyway.com</a>
+            <a href="mailto:info@keyway-dispatch.com">
+              info@keyway-dispatch.com
+            </a>
           </div>
 
           <div className="flex items-center mx-12">

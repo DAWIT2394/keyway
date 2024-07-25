@@ -27,8 +27,11 @@ const Footer = () => {
                   +1 (510) 600-5530
                 </a>
 
-                <a href="mailto:info@keyway.com" className="text-primary">
-                  info@keyway.com
+                <a
+                  href="mailto:info@keyway-dispatch.com"
+                  className="text-primary"
+                >
+                  info@keyway-dispatch.com
                 </a>
               </div>
             </div>
