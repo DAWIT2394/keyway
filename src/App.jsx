@@ -6,7 +6,7 @@ import Aboutus from "./pages/Aboutus";
 import Services from "./pages/Services";
 import Contactus from "./pages/Contact";
 import ScrollToTop from "./utils/ScrollToTop";
-
+import TermsAndPrivacy from "./components/termpri";
 function App() {
   return (
     <>
@@ -18,6 +18,8 @@ function App() {
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contactus />} />
+          <Route path="/TermsAndPrivacy" element={<TermsAndPrivacy />} />
+
 
           <Route path="*" element={<Home />} />
         </Route>

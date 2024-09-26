@@ -6,12 +6,13 @@ import Faq from "@/components/Faq";
 import Hero from "@/components/Hero";
 import OurServices from "@/components/OurServices";
 import States from "@/components/States";
-
+import Carp from "@/components/car";
 const Home = () => {
   return (
     <>
       <Hero />
       <About />
+    <Carp/>
       <Faq />
       <Counter />
       <About2 />

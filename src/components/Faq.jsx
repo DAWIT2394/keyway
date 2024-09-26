@@ -84,18 +84,7 @@ const Faq = () => {
                 you get to put more money in your pocket.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>
-                How much do dispatcher services cost?
-              </AccordionTrigger>
-              <AccordionContent>
-                Our pricing model is based on a percentage of the load value,
-                ensuring that you only pay when you earn. This aligns our
-                incentives with yours, allowing us to focus on getting you the
-                best possible rates and ensuring that your loads are managed
-                efficiently.
-              </AccordionContent>
-            </AccordionItem>
+            
             <AccordionItem value="item-3">
               <AccordionTrigger>
                 What are the benefits of using a dispatcher?
@@ -106,6 +95,44 @@ const Faq = () => {
                 tasks. This includes negotiating rates, handling paperwork, and
                 ensuring compliance with regulations. Our goal is to maximize
                 your efficiency and profitability.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>
+              Important Notice Regarding Scamming and Our Commitment to Professionalism
+              </AccordionTrigger>
+              <AccordionContent>
+              We wish to address an ongoing issue concerning fraudulent activities that have been affecting our industry. Unfortunately, scams and misleading practices have become a significant concern. We want to reassure our clients and partners that our company is fully committed to maintaining the highest standards of professionalism and integrity.
+Our organization adheres to all legal and regulatory requirements, and we ensure that all our paperwork and certifications are up-to-date. This includes our <strong>ETA papers,</strong> which confirm our status as registered <strong>taxpayers,</strong> demonstrating our commitment to compliance with government regulations.
+We take these matters very seriously and are continually working to protect our clients from fraudulent activities.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-5">
+              <AccordionTrigger>
+              Disclaimers
+              </AccordionTrigger>
+              <AccordionContent>
+All payments for our services must be made through our official company account, which is linked to our website.
+ We will never request payments via PayPal, personal accounts, or any other method.
+  We are not responsible for any payments made through unauthorized channels. 
+  Any suspicious activity or unauthorized payment requests will be taken seriously, and we will pursue legal action under the U.S. Fraud and False Statements Act, 18 U.S. Code § 1001.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-6">
+              <AccordionTrigger>
+             How much does it cost
+              </AccordionTrigger>
+              <AccordionContent>
+              The standard charge 5%,however,all our fees are capped  Please Contact an onboarding specialist for details
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-7">
+              <AccordionTrigger>
+             Does De helps with Invoicing and How Do I get paid?
+              </AccordionTrigger>
+              <AccordionContent>
+Your invoicing and collection support is include in our services at NO additional cost.
+since we provide original Rate cons,you will get paid directly from shippers and/or Brokers
               </AccordionContent>
             </AccordionItem>
           </Accordion>
