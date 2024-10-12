@@ -44,7 +44,7 @@ const Counter = () => {
           </div>
         </div>
 
-        <div className="relative flex flex-col bg-clip-padding rounded-lg bg-transparent shadow-none">
+        {/* <div className="relative flex flex-col bg-clip-padding rounded-lg bg-transparent shadow-none">
           <div className="p-6 w-full justify-center text-center">
             <div className="flex items-center justify-center mb-2">
               <CountUp
@@ -58,7 +58,7 @@ const Counter = () => {
               Per Mile
             </h5>
           </div>
-        </div>
+        </div> */}
 
         <div className="relative flex flex-col bg-clip-padding rounded-lg bg-transparent shadow-none">
           <div className="p-6 w-full justify-center text-center">
