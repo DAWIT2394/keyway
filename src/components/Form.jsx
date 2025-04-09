@@ -1,33 +1,13 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 const Formfill = () => {
   const [formData, setFormData] = useState({});
-  const [submissions, setSubmissions] = useState([]);
-
-  const handleChange = (e) => {
-    const { name, value, type, files, checked } = e.target;
-    if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
-    } else if (type === "checkbox") {
-      setFormData({
-        ...formData,
-        preferredStates: {
-          ...(formData.preferredStates || {}),
-          [value]: checked,
-        },
-      });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmissions([...submissions, formData]);
-    setFormData({});
-  };
+  const [preferredStates, setPreferredStates] = useState({});
+  const [files, setFiles] = useState({});
+  const [message, setMessage] = useState("");
 
   const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -39,55 +19,86 @@ const Formfill = () => {
     "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
   ];
 
-  const downloadFile = (file) => {
-    const url = URL.createObjectURL(file);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    a.click();
+  const handleChange = (e) => {
+    const { name, value, type, files: fileInput, checked } = e.target;
+    if (type === "file") {
+      setFiles({ ...files, [name]: fileInput[0] });
+    } else if (type === "checkbox") {
+      setPreferredStates({ ...preferredStates, [value]: checked });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const selectedStates = Object.entries(preferredStates)
+      .filter(([_, checked]) => checked)
+      .map(([state]) => state);
+
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, val]) => data.append(key, val));
+    data.append("preferredStates", JSON.stringify(selectedStates));
+
+    Object.entries(files).forEach(([key, file]) => {
+      if (file) data.append(key, file);
+    });
+
+    try {
+      const res = await axios.post("http://localhost:4000/api/contacts", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setMessage("Submitted successfully!");
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+      setMessage("Submission failed.");
+    }
   };
 
   return (
     <div className="p-8 bg-white text-black">
-      <h1 className="text-center text-2xl font-bold">Get In Touch</h1>
+      <h1 className="text-center text-2xl font-bold mb-4">Get In Touch</h1>
 
       <Card className="bg-white text-black p-6">
         <CardContent>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+
             {[
               { name: "companyName", placeholder: "Company Name" },
               { name: "streetAddress", placeholder: "Street Address" },
               { name: "address", placeholder: "Address" },
               { name: "zipCode", placeholder: "ZIP Code" },
-              { name: "address2", placeholder: "Address Line 2" },
+              { name: "addressLine2", placeholder: "Address Line 2" },
               { name: "email", placeholder: "Email" },
-              { name: "phone", placeholder: "Phone Number" },
-              { name: "mc", placeholder: "MC#" },
-              { name: "usdot", placeholder: "USDOT#" },
+              { name: "phoneNumber", placeholder: "Phone Number" },
+              { name: "mcNumber", placeholder: "MC#" },
+              { name: "usdotNumber", placeholder: "USDOT#" },
               { name: "ein", placeholder: "EIN#" },
-              { name: "tn", placeholder: "TN#" },
+              { name: "tNumber", placeholder: "TN#" },
               { name: "numberOfTrucks", placeholder: "Number of trucks?" },
               { name: "numberOfDrivers", placeholder: "Number of drivers?" }
-            ].map((field) => (
+            ].map(({ name, placeholder }) => (
               <input
-                key={field.name}
-                name={field.name}
-                placeholder={field.placeholder}
+                key={name}
+                name={name}
+                placeholder={placeholder}
                 onChange={handleChange}
                 className="p-2 bg-gray-100 text-black rounded-md border border-gray-300"
               />
             ))}
 
             <div className="col-span-2">
-              <h2 className="text-lg mt-4">What states do you prefer to drive in?</h2>
+              <h2 className="text-xl font-bold mb-2 text-center">What states do you prefer to drive in?
+              </h2>
               <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2">
                 {states.map((state) => (
                   <label key={state} className="flex items-center gap-2">
                     <input
                       type="checkbox"
-                      name="preferredStates"
                       value={state}
-                      checked={formData.preferredStates?.[state] || false}
+                      checked={preferredStates[state] || false}
                       onChange={handleChange}
                     />
                     {state}
@@ -97,34 +108,32 @@ const Formfill = () => {
             </div>
 
             <div className="col-span-2 grid gap-4">
-  {[
-    { name: "mcAuthority", label: "Upload MC Authority Letter:" },
-    { name: "ndaOrVoidCheck", label: "NDA or Void Check:" },
-    { name: "liabilityInsurance", label: "Certificate of Liability Insurance:" },
-    { name: "w9", label: "W9:" },
-  ].map((fileInput) => (
-    <div key={fileInput.name} className="flex flex-col">
-      <label htmlFor={fileInput.name} className="text-sm font-medium text-gray-700 mb-1">
-        {fileInput.label}
-      </label>
-      <input
-        type="file"
-        name={fileInput.name}
-        id={fileInput.name}
-        onChange={handleChange}
-        className="file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:bg-white file:text-sm file:text-gray-700 hover:file:bg-gray-100"
-      />
-    </div>
-  ))}
-</div>
+              {[
+                { name: "mcAuthorityLetter", label: "Upload MC Authority Letter:" },
+                { name: "ndaOrVoidCheck", label: "NDA or Void Check:" },
+                { name: "liabilityInsurance", label: "Certificate of Liability Insurance:" },
+                { name: "w9", label: "W9:" },
+              ].map(({ name, label }) => (
+                <div key={name} className="flex flex-col">
+                  <label className="text-sm font-medium mb-1">{label}</label>
+                  <input
+                    type="file"
+                    name={name}
+                    onChange={handleChange}
+                    className="file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:bg-white file:text-sm file:text-gray-700 hover:file:bg-gray-100"
+                  />
+                </div>
+              ))}
+            </div>
 
+            <Button type="submit" className="col-span-2 mt-4 bg-green-600 text-white">
+              Submit
+            </Button>
 
-            <Button type="submit" className="col-span-2 mt-4 bg-green-600 text-white">Submit</Button>
+            {message && <p className="col-span-2 text-center mt-2 text-sm text-green-700">{message}</p>}
           </form>
         </CardContent>
       </Card>
-
-    
     </div>
   );
 };
