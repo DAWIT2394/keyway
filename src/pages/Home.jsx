@@ -7,6 +7,7 @@ import Hero from "@/components/Hero";
 import OurServices from "@/components/OurServices";
 import States from "@/components/States";
 import Carp from "@/components/car";
+import Formfill from "@/components/Form";
 const Home = () => {
   return (
     <>
@@ -17,8 +18,9 @@ const Home = () => {
       <Counter />
       <About2 />
       <OurServices />
-      <ContactForm />
-      <States />
+      {/* <ContactForm />
+      <States /> */}
+      <Formfill/>
     </>
   );
 };

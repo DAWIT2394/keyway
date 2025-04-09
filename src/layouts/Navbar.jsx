@@ -87,8 +87,8 @@ export default function Navbar() {
               </li>
             ))}
 
-            <Link to="/contact">
-              <Button href="/contact" className="mt-6 md:mt-0">
+            <Link to="/Form">
+              <Button href="/Form" className="mt-6 md:mt-0">
                 Get In Touch
               </Button>
             </Link>

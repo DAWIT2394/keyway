@@ -123,7 +123,7 @@ All payments for our services must be made through our official company account,
              How much does it cost
               </AccordionTrigger>
               <AccordionContent>
-              The standard charge 5%,however,all our fees are capped  Please Contact an onboarding specialist for details
+              The standard charge 7%,however,all our fees are capped  Please Contact an onboarding specialist for details
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-7">
