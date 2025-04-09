@@ -30,6 +30,12 @@ const Formfill = () => {
     }
   };
 
+  const resetForm = () => {
+    setFormData({});
+    setPreferredStates({});
+    setFiles({});
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,6 +57,7 @@ const Formfill = () => {
       });
       setMessage("Submitted successfully!");
       console.log(res.data);
+      resetForm(); // clear form after successful submission
     } catch (err) {
       console.error(err);
       setMessage("Submission failed.");
@@ -84,14 +91,14 @@ const Formfill = () => {
                 key={name}
                 name={name}
                 placeholder={placeholder}
+                value={formData[name] || ""}
                 onChange={handleChange}
                 className="p-2 bg-gray-100 text-black rounded-md border border-gray-300"
               />
             ))}
 
             <div className="col-span-2">
-              <h2 className="text-xl font-bold mb-2 text-center">What states do you prefer to drive in?
-              </h2>
+              <h2 className="text-xl font-bold mb-2 text-center">What states do you prefer to drive in?</h2>
               <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2">
                 {states.map((state) => (
                   <label key={state} className="flex items-center gap-2">
