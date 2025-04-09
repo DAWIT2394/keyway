@@ -9,8 +9,8 @@ const Counter = () => {
 
   return (
     <section ref={ref} className="py-32 ">
-      <div className="mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-4 px-4 py-8">
-        <div className="relative flex flex-col bg-clip-padding rounded-lg bg-transparent shadow-none">
+      <div className="mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 px-4 py-8 bg-secondary/30">
+        <div className="relative  flex flex-col bg-clip-padding rounded-lg bg-transparent shadow-none">
           <div className="p-6 w-full justify-center text-center">
             <div className="flex items-center justify-center mb-2">
               <CountUp
