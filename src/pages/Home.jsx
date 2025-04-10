@@ -8,6 +8,7 @@ import OurServices from "@/components/OurServices";
 import States from "@/components/States";
 import Carp from "@/components/car";
 import Formfill from "@/components/Form";
+// import AllContactSubmissions from "@/components/Allsub";
 const Home = () => {
   return (
     <>
@@ -21,6 +22,7 @@ const Home = () => {
       {/* <ContactForm />
       <States /> */}
       <Formfill/>
+      {/* <AllContactSubmissions/> */}
     </>
   );
 };

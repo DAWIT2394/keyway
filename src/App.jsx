@@ -8,6 +8,7 @@ import Contactus from "./pages/Contact";
 import ScrollToTop from "./utils/ScrollToTop";
 import TermsAndPrivacy from "./components/termpri";
 import Formfill from "./components/Form";
+import AllContactSubmissions from "./components/Allsub";
 function App() {
   return (
     <>
@@ -21,6 +22,8 @@ function App() {
           <Route path="/contact" element={<Contactus />} />
           <Route path="/TermsAndPrivacy" element={<TermsAndPrivacy />} />
           <Route path="/Form" element={<Formfill />} />
+          <Route path="/Allsub" element={<AllContactSubmissions />} />
+
 
 
           <Route path="*" element={<Home />} />
