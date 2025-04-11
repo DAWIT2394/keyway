@@ -8,7 +8,6 @@ function AllContactSubmissions() {
   const [fileErrors, setFileErrors] = useState({});
   const [deletingId, setDeletingId] = useState(null);
 
-  // Fetch contacts on component mount
   useEffect(() => {
     fetchContacts();
   }, []);
@@ -16,10 +15,10 @@ function AllContactSubmissions() {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:4000/api/contacts/", {
+      const res = await axios.get("http://localhost:4000/api/contacts", {
         headers: { "Content-Type": "application/json" },
       });
-      setContacts(res.data);
+      setContacts(res.data.contacts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
     } catch (err) {
       console.error("Error fetching contacts:", err);
     } finally {
@@ -28,9 +27,7 @@ function AllContactSubmissions() {
   };
 
   const handleDeleteContact = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this contact?")) {
-      return;
-    }
+    if (!window.confirm("Are you sure you want to delete this contact?")) return;
 
     try {
       setDeletingId(id);
@@ -49,20 +46,11 @@ function AllContactSubmissions() {
     try {
       setFileLoading(prev => ({ ...prev, [fileKey]: true }));
       setFileErrors(prev => ({ ...prev, [fileKey]: null }));
-      
-      // Open in new tab for PDFs
-      if (url?.endsWith('.pdf')) {
+
+      if (url?.endsWith('.pdf') || url?.match(/\.(jpeg|jpg|gif|png)$/)) {
         window.open(url, '_blank');
-      } 
-      // For images, show in modal or new tab
-      else if (url?.match(/\.(jpeg|jpg|gif|png)$/)) {
-        window.open(url, '_blank');
-      }
-      // For other file types, trigger download
-      else {
-        const response = await axios.get(url, {
-          responseType: 'blob',
-        });
+      } else {
+        const response = await axios.get(url, { responseType: 'blob' });
         const href = URL.createObjectURL(response.data);
         const link = document.createElement('a');
         link.href = href;
@@ -82,7 +70,7 @@ function AllContactSubmissions() {
 
   const renderFileLink = (url, label) => {
     if (!url) return <span className="text-gray-500 italic">Not provided</span>;
-    
+
     const fileKey = `${url}-${label}`;
     const isLoading = fileLoading[fileKey];
     const error = fileErrors[fileKey];
@@ -96,12 +84,8 @@ function AllContactSubmissions() {
         >
           {label}
         </button>
-        {isLoading && (
-          <span className="ml-2 text-sm text-gray-500">Loading...</span>
-        )}
-        {error && (
-          <span className="ml-2 text-sm text-red-500">{error}</span>
-        )}
+        {isLoading && <span className="ml-2 text-sm text-gray-500">Loading...</span>}
+        {error && <span className="ml-2 text-sm text-red-500">{error}</span>}
       </div>
     );
   };
@@ -128,7 +112,6 @@ function AllContactSubmissions() {
         <div className="space-y-6">
           {contacts.map((contact) => (
             <div key={contact._id} className="bg-white rounded-lg shadow-md p-6 relative">
-              {/* Delete button positioned at top-right */}
               <button
                 onClick={() => handleDeleteContact(contact._id)}
                 disabled={deletingId === contact._id}
@@ -148,14 +131,14 @@ function AllContactSubmissions() {
               </button>
 
               <h2 className="text-xl font-semibold mb-4 pr-6">{contact.companyName || 'Unnamed Company'}</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Contact Information</h3>
                   <p><span className="font-semibold">Email:</span> {contact.email || 'N/A'}</p>
                   <p><span className="font-semibold">Phone:</span> {contact.phoneNumber || 'N/A'}</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Company Details</h3>
                   <p><span className="font-semibold">MC Number:</span> {contact.mcNumber || 'N/A'}</p>
@@ -170,12 +153,12 @@ function AllContactSubmissions() {
                 <p>{contact.zipCode || 'N/A'}</p>
               </div>
 
-              {contact.preferredStates && Object.values(contact.preferredStates).some(val => val) && (
+              {contact.preferredStates && Object.values(contact.preferredStates).some(Boolean) && (
                 <div className="mb-4">
                   <h3 className="font-medium text-gray-700 mb-2">Preferred States</h3>
                   <div className="flex flex-wrap gap-2">
                     {Object.entries(contact.preferredStates)
-                      .filter(([_, isSelected]) => isSelected)
+                      .filter(([_, selected]) => selected)
                       .map(([state]) => (
                         <span key={state} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
                           {state}
