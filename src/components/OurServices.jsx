@@ -50,7 +50,7 @@ const OurServices = () => {
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <CircleDollarSign />
             <CardTitle>Dispatching</CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
 
@@ -58,7 +58,7 @@ const OurServices = () => {
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <Headset />
             <CardTitle>Support 24/7</CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
         
@@ -67,7 +67,7 @@ const OurServices = () => {
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <Percent />
             <CardTitle>Rate Negotiations</CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
 
@@ -77,7 +77,7 @@ const OurServices = () => {
             <CardTitle className="text-xl text-center">
               Document Management & Paperwork
             </CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
 
@@ -85,7 +85,7 @@ const OurServices = () => {
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <Gift />
             <CardTitle>Factoring Service</CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
 
@@ -93,7 +93,7 @@ const OurServices = () => {
           <CardHeader className="flex justify-center items-center text-left gap-2">
             <ReceiptEuro />
             <CardTitle>Billing</CardTitle>
-            <CardDescription>From 5% of gross</CardDescription>
+            <CardDescription>From 7%of gross</CardDescription>
           </CardHeader>
         </Card>
       </motion.div>
