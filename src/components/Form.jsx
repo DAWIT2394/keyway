@@ -1,3 +1,4 @@
+// Fully Required Formfill Component
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,18 @@ const Formfill = () => {
   const [preferredStates, setPreferredStates] = useState({});
   const [files, setFiles] = useState({});
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const requiredFields = [
+    "companyName", "streetAddress", "address", "zipCode",
+    "addressLine2", "email", "phoneNumber", "mcNumber",
+    "usdotNumber", "ein", "tNumber", "numberOfTrucks",
+    "numberOfDrivers"
+  ];
+
+  const requiredFiles = [
+    "mcAuthorityLetter", "ndaOrVoidCheck", "liabilityInsurance", "w9"
+  ];
 
   const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -30,14 +43,35 @@ const Formfill = () => {
     }
   };
 
+  const validate = () => {
+    const newErrors = {};
+
+    requiredFields.forEach((field) => {
+      if (!formData[field]) newErrors[field] = "Required";
+    });
+
+    if (!Object.values(preferredStates).some(Boolean)) {
+      newErrors.preferredStates = "Select at least one state";
+    }
+
+    requiredFiles.forEach((file) => {
+      if (!files[file]) newErrors[file] = "Required file missing";
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const resetForm = () => {
     setFormData({});
     setPreferredStates({});
     setFiles({});
+    setErrors({});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
 
     const selectedStates = Object.entries(preferredStates)
       .filter(([_, checked]) => checked)
@@ -46,7 +80,6 @@ const Formfill = () => {
     const data = new FormData();
     Object.entries(formData).forEach(([key, val]) => data.append(key, val));
     data.append("preferredStates", JSON.stringify(selectedStates));
-
     Object.entries(files).forEach(([key, file]) => {
       if (file) data.append(key, file);
     });
@@ -57,7 +90,7 @@ const Formfill = () => {
       });
       setMessage("Submitted successfully!");
       console.log(res.data);
-      resetForm(); // clear form after successful submission
+      resetForm();
     } catch (err) {
       console.error(err);
       setMessage("Submission failed.");
@@ -71,30 +104,17 @@ const Formfill = () => {
       <Card className="bg-white text-black p-6">
         <CardContent>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-
-            {[
-              { name: "companyName", placeholder: "Company Name" },
-              { name: "streetAddress", placeholder: "Street Address" },
-              { name: "address", placeholder: "Address" },
-              { name: "zipCode", placeholder: "ZIP Code" },
-              { name: "addressLine2", placeholder: "Address Line 2" },
-              { name: "email", placeholder: "Email" },
-              { name: "phoneNumber", placeholder: "Phone Number" },
-              { name: "mcNumber", placeholder: "MC#" },
-              { name: "usdotNumber", placeholder: "USDOT#" },
-              { name: "ein", placeholder: "EIN#" },
-              { name: "tNumber", placeholder: "TN#" },
-              { name: "numberOfTrucks", placeholder: "Number of trucks?" },
-              { name: "numberOfDrivers", placeholder: "Number of drivers?" }
-            ].map(({ name, placeholder }) => (
-              <input
-                key={name}
-                name={name}
-                placeholder={placeholder}
-                value={formData[name] || ""}
-                onChange={handleChange}
-                className="p-2 bg-gray-100 text-black rounded-md border border-gray-300"
-              />
+            {requiredFields.map((name) => (
+              <div key={name}>
+                <input
+                  name={name}
+                  placeholder={name.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}
+                  value={formData[name] || ""}
+                  onChange={handleChange}
+                  className="p-2 bg-gray-100 text-black rounded-md border border-gray-300 w-full"
+                />
+                {errors[name] && <p className="text-red-600 text-sm">{errors[name]}</p>}
+              </div>
             ))}
 
             <div className="col-span-2">
@@ -112,23 +132,20 @@ const Formfill = () => {
                   </label>
                 ))}
               </div>
+              {errors.preferredStates && <p className="text-red-600 text-sm">{errors.preferredStates}</p>}
             </div>
 
             <div className="col-span-2 grid gap-4">
-              {[
-                { name: "mcAuthorityLetter", label: "Upload MC Authority Letter:" },
-                { name: "ndaOrVoidCheck", label: "NDA or Void Check:" },
-                { name: "liabilityInsurance", label: "Certificate of Liability Insurance:" },
-                { name: "w9", label: "W9:" },
-              ].map(({ name, label }) => (
+              {requiredFiles.map((name) => (
                 <div key={name} className="flex flex-col">
-                  <label className="text-sm font-medium mb-1">{label}</label>
+                  <label className="text-sm font-medium mb-1">{name.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}:</label>
                   <input
                     type="file"
                     name={name}
                     onChange={handleChange}
                     className="file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:bg-white file:text-sm file:text-gray-700 hover:file:bg-gray-100"
                   />
+                  {errors[name] && <p className="text-red-600 text-sm">{errors[name]}</p>}
                 </div>
               ))}
             </div>

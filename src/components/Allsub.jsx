@@ -7,11 +7,9 @@ function AllContactSubmissions() {
   const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [viewedCards, setViewedCards] = useState({});
-
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const perPage = 5;
-
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -147,15 +145,19 @@ function AllContactSubmissions() {
                     {contact.companyName || 'Unnamed Company'}
                   </h2>
                 </div>
-                <p><strong>Phone:</strong> {contact.phoneNumber}</p>
-                <p><strong>Email:</strong> {contact.email}</p>
-                <p><strong>Address:</strong> {contact.streetAddress}, {contact.addressLine2}, {contact.address}, {contact.zipCode}</p>
-                <p><strong>MC Number:</strong> {contact.mcNumber}</p>
-                <p><strong>USDOT Number:</strong> {contact.usdotNumber}</p>
-                <p><strong>EIN:</strong> {contact.ein}</p>
-                <p><strong>T Number:</strong> {contact.tNumber}</p>
-                <p><strong>Trucks:</strong> {contact.numberOfTrucks}</p>
-                <p><strong>Drivers:</strong> {contact.numberOfDrivers}</p>
+                {[
+                  'phoneNumber', 'email', 'streetAddress', 'addressLine2', 'address', 'zipCode',
+                  'mcNumber', 'usdotNumber', 'ein', 'tNumber', 'numberOfTrucks', 'numberOfDrivers'
+                ].map(field => (
+                  <p key={field}><strong>{field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {contact[field] || 'N/A'}</p>
+                ))}
+
+                {contact.preferredStates && (
+                  <p><strong>Preferred States:</strong> {Array.isArray(contact.preferredStates)
+                    ? contact.preferredStates.join(', ')
+                    : (() => { try { return JSON.parse(contact.preferredStates).join(', '); } catch { return 'Invalid format'; } })()}</p>
+                )}
+
                 <p><strong>Submitted On:</strong> {new Date(contact.createdAt).toLocaleString()}</p>
 
                 <div className="mt-4">
@@ -168,9 +170,7 @@ function AllContactSubmissions() {
                             href={contact[key]}
                             download
                             className="text-blue-600 underline"
-                          >
-                            {label}
-                          </a>
+                          >{label}</a>
                         </li>
                       ) : (
                         <li key={key} className="text-gray-400">{label}: Not uploaded</li>
