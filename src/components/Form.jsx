@@ -1,26 +1,14 @@
-// Fully Required Formfill Component
+// Optional Formfill Component
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 
 const Formfill = () => {
   const [formData, setFormData] = useState({});
   const [preferredStates, setPreferredStates] = useState({});
   const [files, setFiles] = useState({});
-  const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState({});
-
-  const requiredFields = [
-    "companyName", "streetAddress", "address", "zipCode",
-    "addressLine2", "email", "phoneNumber", "mcNumber",
-    "usdotNumber", "ein", "tNumber", "numberOfTrucks",
-    "numberOfDrivers"
-  ];
-
-  const requiredFiles = [
-    "mcAuthorityLetter", "ndaOrVoidCheck", "liabilityInsurance", "w9"
-  ];
 
   const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -30,6 +18,15 @@ const Formfill = () => {
     "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
     "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
     "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  ];
+
+  const allFields = [
+    "companyName", "streetAddress", "address", "zipCode", "addressLine2", "email", "phoneNumber",
+    "mcNumber", "usdotNumber", "ein", "tNumber", "numberOfTrucks", "numberOfDrivers"
+  ];
+
+  const allFiles = [
+    "mcAuthorityLetter", "ndaOrVoidCheck", "liabilityInsurance", "w9"
   ];
 
   const handleChange = (e) => {
@@ -43,35 +40,14 @@ const Formfill = () => {
     }
   };
 
-  const validate = () => {
-    const newErrors = {};
-
-    requiredFields.forEach((field) => {
-      if (!formData[field]) newErrors[field] = "Required";
-    });
-
-    if (!Object.values(preferredStates).some(Boolean)) {
-      newErrors.preferredStates = "Select at least one state";
-    }
-
-    requiredFiles.forEach((file) => {
-      if (!files[file]) newErrors[file] = "Required file missing";
-    });
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const resetForm = () => {
     setFormData({});
     setPreferredStates({});
     setFiles({});
-    setErrors({});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
 
     const selectedStates = Object.entries(preferredStates)
       .filter(([_, checked]) => checked)
@@ -88,23 +64,25 @@ const Formfill = () => {
       const res = await axios.post("http://localhost:4000/api/contacts", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setMessage("Submitted successfully!");
+      toast.success("Submitted successfully!");
       console.log(res.data);
       resetForm();
     } catch (err) {
       console.error(err);
-      setMessage("Submission failed.");
+      toast.error("Submission failed.");
     }
   };
 
   return (
     <div className="p-8 bg-white text-black">
+      <Toaster position="top-right" />
+
       <h1 className="text-center text-2xl font-bold mb-4">Get In Touch</h1>
 
       <Card className="bg-white text-black p-6">
         <CardContent>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-            {requiredFields.map((name) => (
+            {allFields.map((name) => (
               <div key={name}>
                 <input
                   name={name}
@@ -113,7 +91,6 @@ const Formfill = () => {
                   onChange={handleChange}
                   className="p-2 bg-gray-100 text-black rounded-md border border-gray-300 w-full"
                 />
-                {errors[name] && <p className="text-red-600 text-sm">{errors[name]}</p>}
               </div>
             ))}
 
@@ -132,11 +109,10 @@ const Formfill = () => {
                   </label>
                 ))}
               </div>
-              {errors.preferredStates && <p className="text-red-600 text-sm">{errors.preferredStates}</p>}
             </div>
 
             <div className="col-span-2 grid gap-4">
-              {requiredFiles.map((name) => (
+              {allFiles.map((name) => (
                 <div key={name} className="flex flex-col">
                   <label className="text-sm font-medium mb-1">{name.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}:</label>
                   <input
@@ -145,7 +121,6 @@ const Formfill = () => {
                     onChange={handleChange}
                     className="file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:bg-white file:text-sm file:text-gray-700 hover:file:bg-gray-100"
                   />
-                  {errors[name] && <p className="text-red-600 text-sm">{errors[name]}</p>}
                 </div>
               ))}
             </div>
@@ -153,8 +128,6 @@ const Formfill = () => {
             <Button type="submit" className="col-span-2 mt-4 bg-green-600 text-white">
               Submit
             </Button>
-
-            {message && <p className="col-span-2 text-center mt-2 text-sm text-green-700">{message}</p>}
           </form>
         </CardContent>
       </Card>

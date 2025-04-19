@@ -72,7 +72,7 @@ function AllContactSubmissions() {
 
   const fileFields = [
     { key: 'mcAuthorityLetter', label: 'MC Authority Letter' },
-    { key: 'ndaOrVoidCheck', label: 'NDA or Void Check' },
+    { key: 'ndaOrVoidCheck', label: ' or Void Check' },
     { key: 'liabilityInsurance', label: 'Liability Insurance' },
     { key: 'w9', label: 'W9 Form' },
   ];
@@ -93,15 +93,15 @@ function AllContactSubmissions() {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Submitted Contact Info</h1>
-      <div className="flex items-center mb-4 gap-4">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Submitted Contact Info</h1>
+      <div className="flex flex-wrap sm:flex-nowrap items-center mb-4 gap-4">
         <input
           type="text"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           placeholder="Search by phone number"
-          className="border rounded px-3 py-2 w-64"
+          className="border rounded px-3 py-2 w-full sm:w-64"
         />
         <button
           onClick={handleSearch}
@@ -116,7 +116,7 @@ function AllContactSubmissions() {
         <button
           onClick={() => fetchContacts(currentPage)}
           disabled={loading}
-          className={`ml-auto px-4 py-2 rounded ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
+          className={`px-4 py-2 rounded ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
         >{loading ? "Refreshing..." : "Refresh List"}</button>
       </div>
 
@@ -132,7 +132,7 @@ function AllContactSubmissions() {
             {list.map((contact) => (
               <div
                 key={contact._id}
-                className="bg-white rounded-lg shadow-md p-6 relative cursor-pointer"
+                className="bg-white rounded-lg shadow-md p-4 sm:p-6 relative"
                 onClick={() => toggleCardViewed(contact._id)}
               >
                 {isNewCard(contact._id, contact.createdAt) && (
@@ -140,16 +140,13 @@ function AllContactSubmissions() {
                     New
                   </div>
                 )}
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold pr-6">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+                  <h2 className="text-lg sm:text-xl font-semibold pr-6">
                     {contact.companyName || 'Unnamed Company'}
                   </h2>
                 </div>
-                {[
-                  'phoneNumber', 'email', 'streetAddress', 'addressLine2', 'address', 'zipCode',
-                  'mcNumber', 'usdotNumber', 'ein', 'tNumber', 'numberOfTrucks', 'numberOfDrivers'
-                ].map(field => (
-                  <p key={field}><strong>{field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {contact[field] || 'N/A'}</p>
+                {[ 'phoneNumber', 'email', 'streetAddress', 'addressLine2', 'address', 'zipCode', 'mcNumber', 'usdotNumber', 'ein', 'tNumber', 'numberOfTrucks', 'numberOfDrivers' ].map(field => (
+                  <p key={field} className="text-sm sm:text-base"><strong>{field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {contact[field] || 'N/A'}</p>
                 ))}
 
                 {contact.preferredStates && (
@@ -158,9 +155,9 @@ function AllContactSubmissions() {
                     : (() => { try { return JSON.parse(contact.preferredStates).join(', '); } catch { return 'Invalid format'; } })()}</p>
                 )}
 
-                <p><strong>Submitted On:</strong> {new Date(contact.createdAt).toLocaleString()}</p>
+                <p className="text-sm mt-1"><strong>Submitted On:</strong> {new Date(contact.createdAt).toLocaleString()}</p>
 
-                <div className="mt-4">
+                <div className="mt-3">
                   <ul className="mt-2 list-disc ml-5 text-sm">
                     {fileFields.map(({ key, label }) => (
                       contact[key] ? (
@@ -189,7 +186,7 @@ function AllContactSubmissions() {
           </div>
 
           {!isSearching && (
-            <div className="flex justify-center space-x-2 mt-8">
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
