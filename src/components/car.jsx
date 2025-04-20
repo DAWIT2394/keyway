@@ -49,7 +49,7 @@ const ServiceCard = ({ title, description, imgSrc }) => (
     <img src={imgSrc} alt={title} className="mx-auto w-30 h-16 mb-4" />
     <h2 className="text-lg font-semibold mb-2 text-green-600">{title}</h2>
     <p className="text-gray-600 dark:text-white/80 mb-4">{description}</p>
-    <a href="/contact">
+    <a href="/form">
       <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
         More
       </button>

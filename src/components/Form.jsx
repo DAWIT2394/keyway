@@ -61,7 +61,7 @@ const Formfill = () => {
     });
 
     try {
-      const res = await axios.post("http://localhost:4000/api/contacts", data, {
+      const res = await axios.post("https://info.keyway-dispatch.com/api/contacts", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Submitted successfully!");
@@ -74,14 +74,14 @@ const Formfill = () => {
   };
 
   return (
-    <div className="p-8 bg-white text-black">
+    <div className="p-4 sm:p-6 md:p-8 bg-white text-black">
       <Toaster position="top-right" />
 
-      <h1 className="text-center text-2xl font-bold mb-4">Get In Touch</h1>
+      <h1 className="text-center text-xl sm:text-2xl font-bold mb-4">Get In Touch</h1>
 
-      <Card className="bg-white text-black p-6">
+      <Card className="bg-white text-black p-4 sm:p-6">
         <CardContent>
-          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {allFields.map((name) => (
               <div key={name}>
                 <input
@@ -94,9 +94,9 @@ const Formfill = () => {
               </div>
             ))}
 
-            <div className="col-span-2">
-              <h2 className="text-xl font-bold mb-2 text-center">What states do you prefer to drive in?</h2>
-              <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2">
+            <div className="col-span-1 sm:col-span-2">
+              <h2 className="text-lg sm:text-xl font-bold mb-2 text-center">What states do you prefer to drive in?</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2">
                 {states.map((state) => (
                   <label key={state} className="flex items-center gap-2">
                     <input
@@ -111,7 +111,7 @@ const Formfill = () => {
               </div>
             </div>
 
-            <div className="col-span-2 grid gap-4">
+            <div className="col-span-1 sm:col-span-2 grid gap-4">
               {allFiles.map((name) => (
                 <div key={name} className="flex flex-col">
                   <label className="text-sm font-medium mb-1">{name.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}:</label>
@@ -125,7 +125,7 @@ const Formfill = () => {
               ))}
             </div>
 
-            <Button type="submit" className="col-span-2 mt-4 bg-green-600 text-white">
+            <Button type="submit" className="col-span-1 sm:col-span-2 mt-4 bg-green-600 text-white">
               Submit
             </Button>
           </form>
